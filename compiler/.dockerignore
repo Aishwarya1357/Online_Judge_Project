@@ -1,0 +1,17 @@
+# Node modules
+node_modules
+
+# Environment variables
+.env
+
+# Compiler outputs
+outputs
+inputs
+logs
+editorials
+temp
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
