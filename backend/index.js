@@ -23,10 +23,8 @@ app.use(cors({
         'http://localhost:5173', 
         'http://127.0.0.1:5173', 
         'http://localhost:3000',
-        'https://online-judge-project-beta.vercel.app',
-        'https://online-judge-git-6b0d66-aishwaryaramavath28-gmailcoms-projects.vercel.app',
-        'https://online-judge-project-2io2k9uj0.vercel.app',
         'https://online-judge-project-1-es3p.onrender.com',
+        'https://online-judge-project-2-f7pc.onrender.com',
         process.env.FRONTEND_URL // Add this to support environment variable
     ].filter(Boolean), // Remove any undefined values
     credentials: true,
