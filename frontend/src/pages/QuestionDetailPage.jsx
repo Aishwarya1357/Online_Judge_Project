@@ -185,6 +185,11 @@ const QuestionDetailPage = () => {
   };
 
   const handleRunCode = async () => {
+    if (!user) {
+      setRunOutput("❌ Please login to run code.");
+      return;
+    }
+    
     setIsRunLoading(true);
     setRunOutput("");
     setActiveTab("custom");
@@ -201,9 +206,13 @@ const QuestionDetailPage = () => {
         setRunOutput(`❌ Error running code:\n${data.output}`);
       }
     } catch (err) {
-      setRunOutput(
-        `❌ Error: ${err.response?.data?.output || "An error occurred while running the code."}`
-      );
+      if (err.response?.status === 401) {
+        setRunOutput("❌ Please login to run code.");
+      } else {
+        setRunOutput(
+          `❌ Error: ${err.response?.data?.output || "An error occurred while running the code."}`
+        );
+      }
     } finally {
       setIsRunLoading(false);
     }

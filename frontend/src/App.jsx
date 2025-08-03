@@ -54,7 +54,7 @@ function App() {
   return (
     // 3. Wrap the Routes component in a Suspense boundary
     <Suspense fallback={<LoadingSpinner />}>
-      <Routes>
+        <Routes>
         {/* Dashboard - protected and with layout */}
         <Route
           path="/"
@@ -99,9 +99,11 @@ function App() {
         <Route
           path="/questions/:id"
           element={
-            <Layout>
-              <QuestionDetailPage />
-            </Layout>
+            <ProtectedRoute>
+              <Layout>
+                <QuestionDetailPage />
+              </Layout>
+            </ProtectedRoute>
           }
         />
 

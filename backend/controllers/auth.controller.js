@@ -100,8 +100,8 @@ export const logout = async (req, res) => {
         // To clear the cookie, you must pass the same options used to set it.
         res.clearCookie("token", {
             httpOnly: true,
-            secure: false,           // Set to false for localhost
-            sameSite: "none",        // 'none' for cross-origin requests
+            secure: process.env.NODE_ENV === 'production',  // true in production, false in development
+            sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',  // 'lax' for localhost
             path: "/",               // Ensure cookie is available for all paths
         });
 
@@ -120,12 +120,18 @@ export const checkAuth = async (req, res) => {
     try {
         const user = await User.findById(req.userId).select("-password");
         if (!user) {
-            return res.status(400).json({ success: false, message: "User not found" });
+            return res.status(400).json({ authenticated: false, message: "User not found" });
         }
-        res.status(200).json({ success: true, user });
+        res.status(200).json({ 
+            authenticated: true, 
+            user: {
+                ...user._doc,
+                password: undefined,
+            }
+        });
     } catch (error) {
         console.log("Error in checkAuth ", error);
-        res.status(400).json({ success: false, message: error.message });
+        res.status(400).json({ authenticated: false, message: error.message });
     }
 };
 
